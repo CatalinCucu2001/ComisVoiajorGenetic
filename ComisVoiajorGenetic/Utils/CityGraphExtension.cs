@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -42,8 +43,9 @@ namespace ComisVoiajorGenetic.Utils
             return false;
         }
 
-        public static float getValueOfChromosome(this CityGraph cities, Chromosome chromosome)
+        public static float GetValueOfChromosome(this CityGraph cities, Chromosome chromosome)
         {
+            // TODO - Optimize it
             var distance = 0f;
             for (int i = 0; i < chromosome.Genes.Length - 1; i++)
             {
@@ -53,10 +55,30 @@ namespace ComisVoiajorGenetic.Utils
                 }
                 else
                 {
-                    throw new Exception($"There is no connection between {chromosome.Genes[i]} and {chromosome.Genes[i + 1]}");
+                    distance += GlobalSettings.DistanceBetweenCitiesWithoutRelation;
                 }
             }
+
+            if (cities.CheckForRelation(chromosome.Genes[0], chromosome.Genes[cities.Cities.Count - 1]))
+            {
+                distance += cities.GetDistanceBetween(chromosome.Genes[0], chromosome.Genes[cities.Cities.Count - 1]);
+            }
+            else
+            {
+                distance += GlobalSettings.DistanceBetweenCitiesWithoutRelation;
+            }
+
+            if (distance < 0)
+                throw new OverflowException("Distance is negative");
+
             return distance;
+        }
+
+        public static Chromosome GenerateValidChromosome(this CityGraph cities)
+        {
+            Chromosome chromosome = new Chromosome(cities.Cities.Count);
+            chromosome.Shuffle();
+            return chromosome;
         }
     }
 }

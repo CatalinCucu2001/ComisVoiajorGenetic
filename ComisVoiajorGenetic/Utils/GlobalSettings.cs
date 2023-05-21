@@ -21,5 +21,9 @@ namespace ComisVoiajorGenetic.Utils
         public static Color SelectedCircleColor = Color.Coral;
         public static Color DefaultRelationColor = Color.FromArgb(25, 25, 25);
         public static int RelationSize = 5;
+        public static int NumberOfParentChromosomes = 2; // Don't change it
+        public static int NumberOfCombination = 10;
+        public static int NumberOfMutations = 5;
+        public static int DistanceBetweenCitiesWithoutRelation = 50000;
     }
 }

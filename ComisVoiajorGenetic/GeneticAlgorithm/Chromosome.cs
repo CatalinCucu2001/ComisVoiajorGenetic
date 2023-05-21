@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,14 +13,22 @@ namespace ComisVoiajorGenetic.GeneticAlgorithm
         private static Random random = new Random();
         public int[] Genes { get; set; }
 
+        public Color Color { get; set; }
+
+        public float Distance { get; set; }
+
         public Chromosome(int size)
         {
             Genes = Enumerable.Range(0, size).ToArray();
+            Color = Color.FromArgb(random.Next(200),
+                random.Next(200),
+                random.Next(200));
         }
 
         public Chromosome(int[] genes)
         {
             Genes = genes;
+            Color = Color.FromArgb(random.Next(200), random.Next(200), random.Next(200));
         }
 
         public void Shuffle()
@@ -66,7 +75,7 @@ namespace ComisVoiajorGenetic.GeneticAlgorithm
 
         public override string ToString()
         {
-            return string.Join(" ", Genes);
+            return string.Join(" ", Genes) + " -> " + Distance;
         }
 
         public override bool Equals(object obj)

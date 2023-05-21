@@ -45,8 +45,7 @@ namespace ComisVoiajorGenetic.Entity
             {
                 return false;
             }
-            Cities.Add(newCity.Id, newCity);
-            Relations.Add(newCity.Id, new HashSet<int>());
+            AddCity(newCity);
             return true;
         }
 

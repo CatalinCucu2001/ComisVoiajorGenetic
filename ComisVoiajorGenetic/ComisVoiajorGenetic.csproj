@@ -49,8 +49,8 @@
     <Compile Include="Entity\City.cs" />
     <Compile Include="Entity\CityGraph.cs" />
     <Compile Include="GeneticAlgorithm\Chromosome.cs" />
-    <Compile Include="GeneticAlgorithm\ChromosomeExtension.cs" />
-    <Compile Include="GeneticAlgorithm\GenericAlgorithmImpl.cs" />
+    <Compile Include="GeneticAlgorithm\ChromosomeComparer.cs" />
+    <Compile Include="GeneticAlgorithm\GeneticAlgorithmImpl.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

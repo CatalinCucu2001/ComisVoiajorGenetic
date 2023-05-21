@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ComisVoiajorGenetic.GeneticAlgorithm;
 
 namespace ComisVoiajorGenetic.Utils
 {
@@ -65,6 +66,44 @@ namespace ComisVoiajorGenetic.Utils
             }
             pictureBox.Invalidate();
         }
-        
+
+        public static void DrawChromosome(this PictureBox pictureBox, CityGraph cities, Chromosome chromosome)
+        {
+            using (Graphics gfx = Graphics.FromImage(pictureBox.Image))
+            {
+                for (int i = 0; i < chromosome.Genes.Length - 1; i++)
+                {
+                    var city1 = cities.Cities[chromosome.Genes[i]];
+                    var city2 = cities.Cities[chromosome.Genes[i + 1]];
+
+                    pictureBox.DrawRelation(city1, city2, chromosome.Color);
+                }
+                pictureBox.DrawRelation(cities.Cities[chromosome.Genes[0]], 
+                    cities.Cities[chromosome.Genes[cities.Cities.Count - 1]],
+                    chromosome.Color);
+            }
+        }
+
+        public static void DrawAllCities(this PictureBox pictureBox, CityGraph cities)
+        {
+            foreach (var city in cities.Cities.Values)
+            {
+                pictureBox.DrawCity(city, GlobalSettings.DefaultCircleColor);
+            }
+            pictureBox.Invalidate();
+        }
+
+        public static void DrawAllRelations(this PictureBox pictureBox, CityGraph cityGraph)
+        {
+            var cities = cityGraph.Cities;
+            foreach (var citiesRelation in cityGraph.Relations)
+            {
+                var currentCity = cities[citiesRelation.Key];
+                foreach (var cityId in citiesRelation.Value.Where(cityId => cityId > currentCity.Id))
+                {
+                    pictureBox.DrawRelation(currentCity, cities[cityId], GlobalSettings.DefaultRelationColor);
+                }
+            }
+        }
     }
 }
