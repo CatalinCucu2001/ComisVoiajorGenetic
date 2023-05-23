@@ -22,8 +22,7 @@ namespace ComisVoiajorGenetic
         private Queue<City> cityQueue = new Queue<City>();
         private GeneticAlgorithmImpl genetic;
 
-        private int delayWithLag;
-
+        private int chanceToAddRelation;
         public MainForm()
         {
             InitializeComponent();
@@ -104,6 +103,11 @@ namespace ComisVoiajorGenetic
             buttonDrawAllChromosomes.Enabled = !checkBoxEditMode.Checked;
             buttonFilterChromosomes.Enabled = !checkBoxEditMode.Checked;
             buttonNextGeneration.Enabled = !checkBoxEditMode.Checked;
+
+            buttonResetAll.Enabled = checkBoxEditMode.Checked;
+            buttonResetRelations.Enabled = checkBoxEditMode.Checked;
+            buttonRandomRelations.Enabled = checkBoxEditMode.Checked;
+            trackBarChanceRelation.Enabled = checkBoxEditMode.Checked;
 
             if (checkBoxEditMode.Checked)
             {
@@ -193,13 +197,7 @@ namespace ComisVoiajorGenetic
 
         private void buttonFilterChromosomes_Click(object sender, EventArgs e)
         {
-            genetic.population = genetic.population
-                .OrderBy(chromosome => chromosome.Distance)
-                .Distinct(new ChromosomeEqualityComparer())
-                .ToList();
-
-            genetic.population = genetic.population.Take(GlobalSettings.NumberOfParentChromosomes)
-                .ToList();
+            genetic.NaturalSelection();
         }
 
         private void checkBoxTimer_CheckedChanged(object sender, EventArgs e)
@@ -210,6 +208,53 @@ namespace ComisVoiajorGenetic
         private void trackBarTimer_Scroll(object sender, EventArgs e)
         {
             timerGeneration.Interval = trackBarTimer.Value;
+        }
+
+        private void buttonRandomRelations_Click(object sender, EventArgs e)
+        {
+            for (var i = 0; i < cities.Cities.Count - 1; i++)
+            {
+                for (int j = i + 1; j < cities.Cities.Count; j++)
+                {
+                    var city1 = cities.Cities[i]; 
+                    var city2 = cities.Cities[j];
+                    if (!cities.AreCitiesBetween(city1, city2) && random.Next(100) < chanceToAddRelation)
+                    {
+                        cities.AddRelation(city1, city2);
+                        CityMap.DrawRelation(city1, city2, GlobalSettings.DefaultRelationColor, GlobalSettings.RelationSize);
+                    }
+                }
+            }
+        }
+
+        private void trackBarChanceRelation_Scroll(object sender, EventArgs e)
+        {
+            chanceToAddRelation = trackBarChanceRelation.Value;
+        }
+
+        private void buttonDrawAll_Click(object sender, EventArgs e)
+        {
+            buttonClearMap.PerformClick();
+            buttonDrawAllCities.PerformClick();
+            buttonDrawAllRelations.PerformClick();
+        }
+
+        private void buttonResetRelations_Click(object sender, EventArgs e)
+        {
+            foreach (var keyValuePair in cities.Relations)
+            {
+                keyValuePair.Value.Clear();
+            }
+            buttonDrawAll.PerformClick();
+        }
+
+        private void buttonResetAll_Click(object sender, EventArgs e)
+        {
+            cities = new CityGraph();
+            cityQueue.Clear();
+            genetic = null;
+            buttonDrawAll.PerformClick();
+            cityCounter = 0;
         }
     }
 }

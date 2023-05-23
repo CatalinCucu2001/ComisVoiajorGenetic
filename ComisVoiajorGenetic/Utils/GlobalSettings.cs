@@ -9,7 +9,6 @@ namespace ComisVoiajorGenetic.Utils
 {
     internal static class GlobalSettings
     {
-        // GlobalSettings
         public static int CircleRadius = 45;
         public static int CircleSize = 8;
         public static int FontSize = 16;

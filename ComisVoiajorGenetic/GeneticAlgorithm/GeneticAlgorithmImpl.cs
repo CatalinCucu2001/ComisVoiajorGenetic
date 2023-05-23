@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ComisVoiajorGenetic.Utils;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,15 @@ namespace ComisVoiajorGenetic.GeneticAlgorithm
         public GeneticAlgorithmImpl(List<Chromosome> population)
         {
             this.population = population;
+        }
+
+        public void NaturalSelection()
+        {
+            population = population
+                .OrderBy(chromosome => chromosome.Distance)
+                .Distinct(new ChromosomeEqualityComparer())
+                .Take(GlobalSettings.NumberOfParentChromosomes)
+                .ToList();
         }
 
         public override string ToString()

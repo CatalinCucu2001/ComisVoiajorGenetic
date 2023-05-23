@@ -45,8 +45,15 @@
             this.labelTimer = new System.Windows.Forms.Label();
             this.textBoxStatus = new System.Windows.Forms.TextBox();
             this.labelStatus = new System.Windows.Forms.Label();
+            this.buttonRandomRelations = new System.Windows.Forms.Button();
+            this.trackBarChanceRelation = new System.Windows.Forms.TrackBar();
+            this.labelRandomRelation = new System.Windows.Forms.Label();
+            this.buttonResetAll = new System.Windows.Forms.Button();
+            this.buttonResetRelations = new System.Windows.Forms.Button();
+            this.buttonDrawAll = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CityMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTimer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarChanceRelation)).BeginInit();
             this.SuspendLayout();
             // 
             // CityMap
@@ -93,7 +100,7 @@
             // buttonDrawAllChromosomes
             // 
             this.buttonDrawAllChromosomes.Enabled = false;
-            this.buttonDrawAllChromosomes.Location = new System.Drawing.Point(1018, 179);
+            this.buttonDrawAllChromosomes.Location = new System.Drawing.Point(1018, 199);
             this.buttonDrawAllChromosomes.Name = "buttonDrawAllChromosomes";
             this.buttonDrawAllChromosomes.Size = new System.Drawing.Size(129, 23);
             this.buttonDrawAllChromosomes.TabIndex = 4;
@@ -104,7 +111,7 @@
             // buttonNextGeneration
             // 
             this.buttonNextGeneration.Enabled = false;
-            this.buttonNextGeneration.Location = new System.Drawing.Point(1018, 219);
+            this.buttonNextGeneration.Location = new System.Drawing.Point(1018, 239);
             this.buttonNextGeneration.Name = "buttonNextGeneration";
             this.buttonNextGeneration.Size = new System.Drawing.Size(129, 23);
             this.buttonNextGeneration.TabIndex = 5;
@@ -115,7 +122,7 @@
             // buttonFilterChromosomes
             // 
             this.buttonFilterChromosomes.Enabled = false;
-            this.buttonFilterChromosomes.Location = new System.Drawing.Point(1019, 248);
+            this.buttonFilterChromosomes.Location = new System.Drawing.Point(1019, 268);
             this.buttonFilterChromosomes.Name = "buttonFilterChromosomes";
             this.buttonFilterChromosomes.Size = new System.Drawing.Size(127, 23);
             this.buttonFilterChromosomes.TabIndex = 6;
@@ -133,7 +140,7 @@
             this.checkBoxEditMode.AutoSize = true;
             this.checkBoxEditMode.Checked = true;
             this.checkBoxEditMode.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxEditMode.Location = new System.Drawing.Point(1030, 116);
+            this.checkBoxEditMode.Location = new System.Drawing.Point(1030, 136);
             this.checkBoxEditMode.Name = "checkBoxEditMode";
             this.checkBoxEditMode.Size = new System.Drawing.Size(74, 17);
             this.checkBoxEditMode.TabIndex = 7;
@@ -144,7 +151,7 @@
             // buttonInitGenetic
             // 
             this.buttonInitGenetic.Enabled = false;
-            this.buttonInitGenetic.Location = new System.Drawing.Point(1018, 150);
+            this.buttonInitGenetic.Location = new System.Drawing.Point(1018, 170);
             this.buttonInitGenetic.Name = "buttonInitGenetic";
             this.buttonInitGenetic.Size = new System.Drawing.Size(128, 23);
             this.buttonInitGenetic.TabIndex = 8;
@@ -155,7 +162,7 @@
             // checkBoxTimer
             // 
             this.checkBoxTimer.AutoSize = true;
-            this.checkBoxTimer.Location = new System.Drawing.Point(1030, 278);
+            this.checkBoxTimer.Location = new System.Drawing.Point(1030, 298);
             this.checkBoxTimer.Name = "checkBoxTimer";
             this.checkBoxTimer.Size = new System.Drawing.Size(100, 17);
             this.checkBoxTimer.TabIndex = 9;
@@ -165,7 +172,7 @@
             // 
             // trackBarTimer
             // 
-            this.trackBarTimer.Location = new System.Drawing.Point(1019, 342);
+            this.trackBarTimer.Location = new System.Drawing.Point(1019, 362);
             this.trackBarTimer.Maximum = 1000;
             this.trackBarTimer.Minimum = 1;
             this.trackBarTimer.Name = "trackBarTimer";
@@ -179,7 +186,7 @@
             // labelTimer
             // 
             this.labelTimer.AutoSize = true;
-            this.labelTimer.Location = new System.Drawing.Point(1032, 313);
+            this.labelTimer.Location = new System.Drawing.Point(1032, 333);
             this.labelTimer.Name = "labelTimer";
             this.labelTimer.Size = new System.Drawing.Size(79, 26);
             this.labelTimer.TabIndex = 12;
@@ -202,12 +209,77 @@
             this.labelStatus.TabIndex = 15;
             this.labelStatus.Text = "Status:";
             // 
+            // buttonRandomRelations
+            // 
+            this.buttonRandomRelations.Location = new System.Drawing.Point(1018, 481);
+            this.buttonRandomRelations.Name = "buttonRandomRelations";
+            this.buttonRandomRelations.Size = new System.Drawing.Size(127, 23);
+            this.buttonRandomRelations.TabIndex = 16;
+            this.buttonRandomRelations.Text = "Add Random Relations";
+            this.buttonRandomRelations.UseVisualStyleBackColor = true;
+            this.buttonRandomRelations.Click += new System.EventHandler(this.buttonRandomRelations_Click);
+            // 
+            // trackBarChanceRelation
+            // 
+            this.trackBarChanceRelation.Location = new System.Drawing.Point(1018, 528);
+            this.trackBarChanceRelation.Maximum = 100;
+            this.trackBarChanceRelation.Name = "trackBarChanceRelation";
+            this.trackBarChanceRelation.Size = new System.Drawing.Size(127, 45);
+            this.trackBarChanceRelation.TabIndex = 17;
+            this.trackBarChanceRelation.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackBarChanceRelation.Scroll += new System.EventHandler(this.trackBarChanceRelation_Scroll);
+            // 
+            // labelRandomRelation
+            // 
+            this.labelRandomRelation.AutoSize = true;
+            this.labelRandomRelation.Location = new System.Drawing.Point(1015, 512);
+            this.labelRandomRelation.Name = "labelRandomRelation";
+            this.labelRandomRelation.Size = new System.Drawing.Size(132, 13);
+            this.labelRandomRelation.TabIndex = 18;
+            this.labelRandomRelation.Text = "0 Add relation chance 100";
+            // 
+            // buttonResetAll
+            // 
+            this.buttonResetAll.Location = new System.Drawing.Point(1019, 579);
+            this.buttonResetAll.Name = "buttonResetAll";
+            this.buttonResetAll.Size = new System.Drawing.Size(126, 23);
+            this.buttonResetAll.TabIndex = 19;
+            this.buttonResetAll.Text = "Reset ALL";
+            this.buttonResetAll.UseVisualStyleBackColor = true;
+            this.buttonResetAll.Click += new System.EventHandler(this.buttonResetAll_Click);
+            // 
+            // buttonResetRelations
+            // 
+            this.buttonResetRelations.Location = new System.Drawing.Point(1019, 608);
+            this.buttonResetRelations.Name = "buttonResetRelations";
+            this.buttonResetRelations.Size = new System.Drawing.Size(126, 23);
+            this.buttonResetRelations.TabIndex = 20;
+            this.buttonResetRelations.Text = "Reset Relations";
+            this.buttonResetRelations.UseVisualStyleBackColor = true;
+            this.buttonResetRelations.Click += new System.EventHandler(this.buttonResetRelations_Click);
+            // 
+            // buttonDrawAll
+            // 
+            this.buttonDrawAll.Location = new System.Drawing.Point(1019, 100);
+            this.buttonDrawAll.Name = "buttonDrawAll";
+            this.buttonDrawAll.Size = new System.Drawing.Size(126, 23);
+            this.buttonDrawAll.TabIndex = 21;
+            this.buttonDrawAll.Text = "Draw ALL";
+            this.buttonDrawAll.UseVisualStyleBackColor = true;
+            this.buttonDrawAll.Click += new System.EventHandler(this.buttonDrawAll_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(1916, 1013);
+            this.Controls.Add(this.buttonDrawAll);
+            this.Controls.Add(this.buttonResetRelations);
+            this.Controls.Add(this.buttonResetAll);
+            this.Controls.Add(this.labelRandomRelation);
+            this.Controls.Add(this.trackBarChanceRelation);
+            this.Controls.Add(this.buttonRandomRelations);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.textBoxStatus);
             this.Controls.Add(this.labelTimer);
@@ -229,6 +301,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.CityMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTimer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarChanceRelation)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,6 +324,12 @@
         private System.Windows.Forms.Label labelTimer;
         private System.Windows.Forms.TextBox textBoxStatus;
         private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.Button buttonRandomRelations;
+        private System.Windows.Forms.TrackBar trackBarChanceRelation;
+        private System.Windows.Forms.Label labelRandomRelation;
+        private System.Windows.Forms.Button buttonResetAll;
+        private System.Windows.Forms.Button buttonResetRelations;
+        private System.Windows.Forms.Button buttonDrawAll;
     }
 }
 
