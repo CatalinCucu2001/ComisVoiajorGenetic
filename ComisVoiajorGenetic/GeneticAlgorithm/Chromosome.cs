@@ -36,35 +36,68 @@ namespace ComisVoiajorGenetic.GeneticAlgorithm
             Genes = Genes.OrderBy(i => random.Next()).ToArray();
         }
 
-        public Chromosome CombineWith(Chromosome chromosome)
+        public Chromosome CombineWith222(Chromosome chromosome)
         {
-            var childGenes = Enumerable.Repeat(-1, Genes.Length).ToArray();
+            var childGenes1 = Enumerable.Repeat(-1, Genes.Length).ToArray();
             var crossoverPoint = random.Next(Genes.Length);
 
             // Fill first part of genes from first parent (this)
             for (int i = 0; i < crossoverPoint; i++)
             {
-                childGenes[i] = Genes[i];
+                childGenes1[i] = Genes[i];
             }
 
             // Fill second part of genes from second parent (chromosome)
             var index = crossoverPoint;
             for (int i = 0; i < Genes.Length && index < Genes.Length; i++)
             {
-                if (!childGenes.Contains(chromosome.Genes[i]))
+                if (!childGenes1.Contains(chromosome.Genes[i]))
                 {
-                    childGenes[index++] = chromosome.Genes[i];
+                    childGenes1[index++] = chromosome.Genes[i];
                 }
             }
 
-            return new Chromosome(childGenes);
+            return new Chromosome(childGenes1);
+        }
+
+        public (Chromosome, Chromosome) CombineWith(Chromosome chromosome)
+        {
+            var childGenes1 = Enumerable.Repeat(-1, Genes.Length).ToArray();
+            var childGenes2 = Enumerable.Repeat(-1, Genes.Length).ToArray();
+            var crossoverPoint = random.Next(Genes.Length);
+
+            // Fill first part of genes
+            for (int i = 0; i < crossoverPoint; i++)
+            {
+                childGenes1[i] = Genes[i];
+                childGenes2[i] = chromosome.Genes[i];
+            }
+
+            // Fill second part of genes
+            var index1 = crossoverPoint;
+            var index2 = crossoverPoint;
+            for (var i = 0; i < Genes.Length && index1 < Genes.Length; i++)
+            {
+                if (!childGenes1.Contains(chromosome.Genes[i]))
+                {
+                    childGenes1[index1++] = chromosome.Genes[i];
+                }
+            }
+            for (var i = 0; i < Genes.Length && index2 < Genes.Length; i++)
+            {
+                if (!childGenes2.Contains(Genes[i]))
+                {
+                    childGenes2[index2++] = Genes[i];
+                }
+            }
+            return (new Chromosome(childGenes1), new Chromosome(childGenes2));
         }
 
         public Chromosome Mutate()
         {
             var numberOfSwaps = random.Next(Genes.Length);
             var childGenes = this.Genes.Clone() as int[];
-            for (int i = 0; i < numberOfSwaps; i++)
+            for (var i = 0; i < numberOfSwaps; i++)
             {
                 var pos1 = random.Next(Genes.Length);
                 var pos2 = random.Next(Genes.Length);

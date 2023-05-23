@@ -169,7 +169,9 @@ namespace ComisVoiajorGenetic
             {
                 for (int i = 0; i < GlobalSettings.NumberOfCombination; i++)
                 {
-                    genetic.population.Add(ch1.CombineWith(ch2));
+                    var result = ch1.CombineWith(ch2);
+                    genetic.population.Add(result.Item1);
+                    genetic.population.Add(result.Item2);
                 }
 
                 for (int i = 0; i < GlobalSettings.NumberOfMutations; i++)
@@ -177,13 +179,13 @@ namespace ComisVoiajorGenetic
                     genetic.population.Add(ch1.Mutate());
                     genetic.population.Add(ch2.Mutate());
                 }
+
                 genetic.population = genetic.population
                     .Distinct(new ChromosomeEqualityComparer())
                     .ToList();
                 ch1 = genetic.population[random.Next(genetic.population.Count)];
                 ch2 = genetic.population[random.Next(genetic.population.Count)];
             }
-
 
             genetic.population.ForEach(chromosome => chromosome.Distance = cities.GetValueOfChromosome(chromosome));
             genetic.population = genetic.population.OrderBy(chromosome => chromosome.Distance).ToList();

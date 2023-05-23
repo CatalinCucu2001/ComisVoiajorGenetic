@@ -21,7 +21,7 @@ namespace ComisVoiajorGenetic.GeneticAlgorithm
 
         public int GetHashCode(Chromosome obj)
         {
-            return obj == null ? 0 : obj.Genes.Aggregate(17, (current, gene) => current * 31 + gene.GetHashCode());
+            return obj.Genes.Aggregate(17, (current, gene) => current * 31 + gene.GetHashCode());
         }
     }
 }
