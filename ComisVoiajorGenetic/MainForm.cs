@@ -15,6 +15,7 @@ namespace ComisVoiajorGenetic
     public partial class MainForm : Form
     {
         // Utils
+        private Random random = new Random();
         private int cityCounter;
 
         private CityGraph cities = new CityGraph();
@@ -23,19 +24,10 @@ namespace ComisVoiajorGenetic
 
         private int delayWithLag;
 
-
         public MainForm()
         {
             InitializeComponent();
             timerGeneration.Interval = trackBarTimer.Value;
-            delayWithLag = trackBarDelay.Value;
-        }
-        private void MainForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                this.Close();
-            }
         }
 
         private void CityMap_MouseDown(object sender, MouseEventArgs e)
@@ -82,7 +74,7 @@ namespace ComisVoiajorGenetic
                     if (!cities.AreCitiesBetween(city1, city2))
                     {
                         cities.AddRelation(city1, city2);
-                        CityMap.DrawRelation(city1, city2, GlobalSettings.DefaultRelationColor);
+                        CityMap.DrawRelation(city1, city2, GlobalSettings.DefaultRelationColor, GlobalSettings.RelationSize);
                     }
                     CityMap.DrawCity(city1, GlobalSettings.DefaultCircleColor);
                     CityMap.DrawCity(city2, GlobalSettings.DefaultCircleColor);
@@ -136,16 +128,10 @@ namespace ComisVoiajorGenetic
             if (checkBoxEditMode.Checked || genetic == null)
                 return;
 
-            buttonNextGeneration_Click(sender, e);
-            if (delayWithLag != 0)
-            {
-                buttonDrawAllChromosomes_Click(sender, e);
-                Invalidate();
-                System.Threading.Thread.Sleep(delayWithLag * 10);
-            }
-            buttonFilterChromosomes_Click(sender, e);
-            buttonDrawAllChromosomes_Click(sender, e);
-
+            buttonNextGeneration.PerformClick();
+            buttonDrawAllChromosomes.PerformClick();
+            buttonFilterChromosomes.PerformClick();
+            buttonDrawAllChromosomes.PerformClick();
         }
 
         private void buttonDrawAllChromosomes_Click(object sender, EventArgs e)
@@ -154,9 +140,18 @@ namespace ComisVoiajorGenetic
             CityMap.DrawAllCities(cities);
             CityMap.Invalidate();
 
-            foreach (var chromosome in genetic.population)
+
+            if (genetic.population.Count == 2)
             {
-                CityMap.DrawChromosome(cities, chromosome);
+                CityMap.DrawChromosome(cities, genetic.population[0], (int)(GlobalSettings.RelationSize * 2.5));
+                CityMap.DrawChromosome(cities, genetic.population[1], GlobalSettings.RelationSize);
+            }
+            else
+            {
+                foreach (var chromosome in genetic.population)
+                {
+                    CityMap.DrawChromosome(cities, chromosome, GlobalSettings.RelationSize);
+                }
             }
             textBoxStatus.Log(genetic);
         }
@@ -171,16 +166,26 @@ namespace ComisVoiajorGenetic
             var ch1 = genetic.population[0];
             var ch2 = genetic.population[1];
 
-            for (int i = 0; i < GlobalSettings.NumberOfCombination; i++)
+            for (int r = 0; r < GlobalSettings.NumberOfRepeats; r++)
             {
-                genetic.population.Add(ch1.CombineWith(ch2));
+                for (int i = 0; i < GlobalSettings.NumberOfCombination; i++)
+                {
+                    genetic.population.Add(ch1.CombineWith(ch2));
+                }
+
+                for (int i = 0; i < GlobalSettings.NumberOfMutations; i++)
+                {
+                    genetic.population.Add(ch1.Mutate());
+                    genetic.population.Add(ch2.Mutate());
+                }
+                genetic.population = genetic.population
+                    .Distinct(new ChromosomeEqualityComparer())
+                    .ToList();
+                ch1 = genetic.population[random.Next(genetic.population.Count)];
+                ch2 = genetic.population[random.Next(genetic.population.Count)];
             }
 
-            for (int i = 0; i < GlobalSettings.NumberOfMutations; i++)
-            {
-                genetic.population.Add(ch1.Mutate());
-                genetic.population.Add(ch2.Mutate());
-            }
+
             genetic.population.ForEach(chromosome => chromosome.Distance = cities.GetValueOfChromosome(chromosome));
             genetic.population = genetic.population.OrderBy(chromosome => chromosome.Distance).ToList();
         }
@@ -189,7 +194,7 @@ namespace ComisVoiajorGenetic
         {
             genetic.population = genetic.population
                 .OrderBy(chromosome => chromosome.Distance)
-                .Distinct(new ChromosomeComparer())
+                .Distinct(new ChromosomeEqualityComparer())
                 .ToList();
 
             genetic.population = genetic.population.Take(GlobalSettings.NumberOfParentChromosomes)
@@ -204,11 +209,6 @@ namespace ComisVoiajorGenetic
         private void trackBarTimer_Scroll(object sender, EventArgs e)
         {
             timerGeneration.Interval = trackBarTimer.Value;
-        }
-
-        private void trackBarDelay_Scroll(object sender, EventArgs e)
-        {
-            delayWithLag = trackBarDelay.Value;
         }
     }
 }

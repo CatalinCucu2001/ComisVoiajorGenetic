@@ -42,14 +42,11 @@
             this.buttonInitGenetic = new System.Windows.Forms.Button();
             this.checkBoxTimer = new System.Windows.Forms.CheckBox();
             this.trackBarTimer = new System.Windows.Forms.TrackBar();
-            this.trackBarDelay = new System.Windows.Forms.TrackBar();
             this.labelTimer = new System.Windows.Forms.Label();
-            this.labelBeforeFilter = new System.Windows.Forms.Label();
             this.textBoxStatus = new System.Windows.Forms.TextBox();
             this.labelStatus = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CityMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTimer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarDelay)).BeginInit();
             this.SuspendLayout();
             // 
             // CityMap
@@ -179,18 +176,6 @@
             this.trackBarTimer.Value = 500;
             this.trackBarTimer.Scroll += new System.EventHandler(this.trackBarTimer_Scroll);
             // 
-            // trackBarDelay
-            // 
-            this.trackBarDelay.Location = new System.Drawing.Point(1018, 419);
-            this.trackBarDelay.Maximum = 500;
-            this.trackBarDelay.Name = "trackBarDelay";
-            this.trackBarDelay.Size = new System.Drawing.Size(127, 45);
-            this.trackBarDelay.TabIndex = 11;
-            this.trackBarDelay.TickFrequency = 10;
-            this.trackBarDelay.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trackBarDelay.Value = 250;
-            this.trackBarDelay.Scroll += new System.EventHandler(this.trackBarDelay_Scroll);
-            // 
             // labelTimer
             // 
             this.labelTimer.AutoSize = true;
@@ -200,27 +185,18 @@
             this.labelTimer.TabIndex = 12;
             this.labelTimer.Text = "Delay Between\r\nGenerations\r\n";
             // 
-            // labelBeforeFilter
-            // 
-            this.labelBeforeFilter.AutoSize = true;
-            this.labelBeforeFilter.Location = new System.Drawing.Point(1032, 390);
-            this.labelBeforeFilter.Name = "labelBeforeFilter";
-            this.labelBeforeFilter.Size = new System.Drawing.Size(93, 26);
-            this.labelBeforeFilter.TabIndex = 13;
-            this.labelBeforeFilter.Text = "Delay Before Filter\r\n(App will freeze)\r\n";
-            // 
             // textBoxStatus
             // 
-            this.textBoxStatus.Location = new System.Drawing.Point(1212, 28);
+            this.textBoxStatus.Location = new System.Drawing.Point(1152, 28);
             this.textBoxStatus.Multiline = true;
             this.textBoxStatus.Name = "textBoxStatus";
-            this.textBoxStatus.Size = new System.Drawing.Size(272, 359);
+            this.textBoxStatus.Size = new System.Drawing.Size(736, 436);
             this.textBoxStatus.TabIndex = 14;
             // 
             // labelStatus
             // 
             this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(1209, 12);
+            this.labelStatus.Location = new System.Drawing.Point(1153, 12);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(40, 13);
             this.labelStatus.TabIndex = 15;
@@ -234,9 +210,7 @@
             this.ClientSize = new System.Drawing.Size(1916, 1013);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.textBoxStatus);
-            this.Controls.Add(this.labelBeforeFilter);
             this.Controls.Add(this.labelTimer);
-            this.Controls.Add(this.trackBarDelay);
             this.Controls.Add(this.trackBarTimer);
             this.Controls.Add(this.checkBoxTimer);
             this.Controls.Add(this.buttonInitGenetic);
@@ -253,10 +227,8 @@
             this.Name = "MainForm";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.CityMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTimer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarDelay)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,9 +248,7 @@
         public System.Windows.Forms.Timer timerGeneration;
         private System.Windows.Forms.CheckBox checkBoxTimer;
         private System.Windows.Forms.TrackBar trackBarTimer;
-        private System.Windows.Forms.TrackBar trackBarDelay;
         private System.Windows.Forms.Label labelTimer;
-        private System.Windows.Forms.Label labelBeforeFilter;
         private System.Windows.Forms.TextBox textBoxStatus;
         private System.Windows.Forms.Label labelStatus;
     }

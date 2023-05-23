@@ -39,7 +39,7 @@ namespace ComisVoiajorGenetic.Utils
             }
         }
 
-        public static void DrawRelation(this PictureBox pictureBox, City city1, City city2, Color color)
+        public static void DrawRelation(this PictureBox pictureBox, City city1, City city2, Color color, int relationSize)
         {
             using (Graphics gfx = Graphics.FromImage(pictureBox.Image))
             {
@@ -60,14 +60,14 @@ namespace ComisVoiajorGenetic.Utils
                 var newPointB = new Point(dX, dY);
 
 
-                gfx.DrawLine(new Pen(color, GlobalSettings.RelationSize),
+                gfx.DrawLine(new Pen(color, relationSize),
                     newPointA.X, newPointA.Y,
                     newPointB.X, newPointB.Y);
             }
             pictureBox.Invalidate();
         }
 
-        public static void DrawChromosome(this PictureBox pictureBox, CityGraph cities, Chromosome chromosome)
+        public static void DrawChromosome(this PictureBox pictureBox, CityGraph cities, Chromosome chromosome, int relationSize)
         {
             using (Graphics gfx = Graphics.FromImage(pictureBox.Image))
             {
@@ -76,11 +76,12 @@ namespace ComisVoiajorGenetic.Utils
                     var city1 = cities.Cities[chromosome.Genes[i]];
                     var city2 = cities.Cities[chromosome.Genes[i + 1]];
 
-                    pictureBox.DrawRelation(city1, city2, chromosome.Color);
+                    pictureBox.DrawRelation(city1, city2, chromosome.Color, relationSize);
                 }
                 pictureBox.DrawRelation(cities.Cities[chromosome.Genes[0]], 
                     cities.Cities[chromosome.Genes[cities.Cities.Count - 1]],
-                    chromosome.Color);
+                    chromosome.Color,
+                    relationSize);
             }
         }
 
@@ -101,7 +102,7 @@ namespace ComisVoiajorGenetic.Utils
                 var currentCity = cities[citiesRelation.Key];
                 foreach (var cityId in citiesRelation.Value.Where(cityId => cityId > currentCity.Id))
                 {
-                    pictureBox.DrawRelation(currentCity, cities[cityId], GlobalSettings.DefaultRelationColor);
+                    pictureBox.DrawRelation(currentCity, cities[cityId], GlobalSettings.DefaultRelationColor, GlobalSettings.RelationSize);
                 }
             }
         }
