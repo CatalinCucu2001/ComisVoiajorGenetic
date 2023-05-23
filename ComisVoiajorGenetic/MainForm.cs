@@ -129,7 +129,6 @@ namespace ComisVoiajorGenetic
                 return;
 
             buttonNextGeneration.PerformClick();
-            buttonDrawAllChromosomes.PerformClick();
             buttonFilterChromosomes.PerformClick();
             buttonDrawAllChromosomes.PerformClick();
         }
